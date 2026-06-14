@@ -1,7 +1,7 @@
 'use server'
 import { z } from 'zod'
 import { loginFormSchema, signupFormSchema } from './formSchema'
-import { cookies } from 'next/headers'
+import { cookies, headers } from 'next/headers'
 import { simplePOSTrequest } from './commonFetch'
 
 interface LoginResponse {
@@ -11,15 +11,29 @@ interface LoginResponse {
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
+const resolveAppOrigin = () => {
+  const headerStore = headers();
+  const host = headerStore.get('x-forwarded-host') || headerStore.get('host');
+  const protocol = headerStore.get('x-forwarded-proto') || (host?.includes('localhost') ? 'http' : 'https');
+
+  if (host) {
+    return `${protocol}://${host}`;
+  }
+
+  if (process.env.NEXT_PUBLIC_APP_URL) {
+    return process.env.NEXT_PUBLIC_APP_URL;
+  }
+
+  throw new Error('Application URL is not configured');
+}
+
 export const loginUser = async (credentials: z.infer<typeof loginFormSchema>) => {
   const cookieStore = cookies();
   cookieStore.delete('token')
   cookieStore.delete('refresh')
   credentials.username = credentials.instu_id + '_' + credentials.username;
   try {
-    // Use the internal API route instead of calling the external API directly
-    // Get the origin from request headers or use the environment variable
-    const origin = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+    const origin = resolveAppOrigin();
     const response = await fetch(`${origin}/api/auth/login`, {
       method: 'POST',
       headers: {
