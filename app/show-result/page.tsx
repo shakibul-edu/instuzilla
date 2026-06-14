@@ -42,8 +42,6 @@ export default function Page() {
         });
       }
     } catch (error: any) {
-      console.log("Error in getMarks");
-      console.log(error)
       toast({
         title: "Failure",
         description: error.message,
