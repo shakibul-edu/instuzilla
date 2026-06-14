@@ -45,14 +45,6 @@ export default function Page() {
   // Define a submit handler.
   function onSubmit(values: z.infer<typeof loginFormSchema>) {
     signIn(values);
-    if (user) {
-      toast({
-        variant: "default",
-        title: "Success!",
-        description: `Hi! ${user.name}, you're now logged in!`,
-      });
-      
-    }
   }
 
   useEffect(() => {
