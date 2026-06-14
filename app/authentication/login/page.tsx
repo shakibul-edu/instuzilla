@@ -30,7 +30,7 @@ export default function Page() {
     if (user) {
       return router.push(redirectUrl);
     }
-  }, [user]);
+  }, [user, redirectUrl, router]);
 
   // Creating form resolver using zodResolver
   const form = useForm<z.infer<typeof loginFormSchema>>({
