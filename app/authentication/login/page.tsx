@@ -30,7 +30,7 @@ export default function Page() {
     if (user) {
       return router.push(redirectUrl);
     }
-  }, [user]);
+  }, [user, redirectUrl, router]);
 
   // Creating form resolver using zodResolver
   const form = useForm<z.infer<typeof loginFormSchema>>({
@@ -45,14 +45,6 @@ export default function Page() {
   // Define a submit handler.
   function onSubmit(values: z.infer<typeof loginFormSchema>) {
     signIn(values);
-    if (user) {
-      toast({
-        variant: "default",
-        title: "Success!",
-        description: `Hi! ${user.name}, you're now logged in!`,
-      });
-      
-    }
   }
 
   useEffect(() => {

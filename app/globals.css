@@ -100,3 +100,112 @@
   }
 
   @layer base {img {display: initial;}}
+
+  @layer components {
+    /* Smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Text utilities */
+    .text-balance {
+      text-wrap: balance;
+    }
+
+    .text-pretty {
+      text-wrap: pretty;
+    }
+
+    /* Button transitions */
+    button {
+      @apply transition-all duration-200;
+    }
+
+    a {
+      @apply transition-colors;
+    }
+
+    /* Hover elevation */
+    .hover-lift {
+      @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+    }
+
+    /* Gradient text */
+    .gradient-text {
+      @apply bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent;
+    }
+
+    /* Section padding */
+    .section-padding {
+      @apply py-12 sm:py-16 lg:py-20;
+    }
+
+    /* Container sizing */
+    .container-max {
+      @apply mx-auto max-w-7xl;
+    }
+
+    /* Smooth fade in animation */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-in {
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    /* Scroll reveal animation */
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-slide-up {
+      animation: slideUp 0.6s ease-out;
+    }
+
+    /* Glow effect for badges */
+    .glow-blue {
+      @apply shadow-lg shadow-blue-500/20;
+    }
+
+    .glow-purple {
+      @apply shadow-lg shadow-purple-500/20;
+    }
+
+    /* Professional form styling */
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    textarea,
+    select {
+      @apply rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-slate-900 transition-all hover:border-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:hover:border-slate-600 dark:focus:border-blue-400 dark:focus:ring-blue-400/20;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      @apply bg-slate-100 dark:bg-slate-900;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      @apply rounded-full bg-slate-300 hover:bg-slate-400 dark:bg-slate-700 dark:hover:bg-slate-600;
+    }
+  }
