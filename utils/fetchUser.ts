@@ -17,7 +17,10 @@ export const loginUser = async (credentials: z.infer<typeof loginFormSchema>) =>
   cookieStore.delete('refresh')
   credentials.username = credentials.instu_id + '_' + credentials.username;
   try {
-    const response = await fetch(`${baseUrl}/api/token/`, {
+    // Use the internal API route instead of calling the external API directly
+    // Get the origin from request headers or use the environment variable
+    const origin = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+    const response = await fetch(`${origin}/api/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +45,7 @@ export const loginUser = async (credentials: z.infer<typeof loginFormSchema>) =>
     } else if (response.status > 201) {
       console.log(response)
       const error = await response.json()
-      throw new Error(error.detail)
+      throw new Error(error.error || error.detail)
     } else {
       throw new Error("Something went wrong!")
     }
